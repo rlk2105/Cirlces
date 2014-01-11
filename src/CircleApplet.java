@@ -54,15 +54,17 @@ public class CircleApplet extends javax.swing.JApplet {
         try {
             java.awt.EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
+                    // se initializeaza lista de cercuri
                     circles = new LinkedList<Circle>();
+                    // se defineste un timer care se apeleaza la 20ms
                     tm = new Timer(20, new ActionListener() {
                     @Override
+                    // la fiecare update al timer-ului se redeseneaza cercurile pe canvas
                     public void actionPerformed(ActionEvent e) {
-                        canvas.repaint();
+                            canvas.repaint();
                             for(Circle c : circles){
                                 c.drawCircle(canvas);
                             }
-                            //canvas.update(null);
                         }
                     });
                     initComponents();

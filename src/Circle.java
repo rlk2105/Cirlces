@@ -15,14 +15,19 @@ import java.awt.Graphics;
  * @author Vlad
  */
 public class Circle {
+    // culoarea cercului
     private Color _color;
+    // vectori 2d pentru pozitia si directia 
     private Point _location, _direction;
+    // dimensiunea cercului
     private Dimension cDimension;
+    // boolean care retine daca cercul este sau nu in miscare
     private boolean _inMotion;
     
+    // generator de numere aleatoare uniforme pe intervalul (min, max)
     private int rand(int min, int max)
     {
-        return (int)(Math.random() * max + min);
+        return (int)(Math.random() * (max - min) + min);
     }
     
     public Circle(Color c, Dimension d)
