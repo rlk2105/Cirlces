@@ -1,12 +1,13 @@
 
 import com.sun.corba.se.impl.orbutil.graph.Graph;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /*
@@ -23,8 +24,8 @@ public class CircleApplet extends javax.swing.JApplet {
     /**
      * Initializes the applet CircleApplet
      */
-    LinkedList<Circle> circles;
-    Timer tm;
+    LinkedList<Circle> circles;// se defineste o lista de cercuri iniial vida
+    Timer tm;// se defineste un timer pentru a declansa desenarea la un interal dat 
     @Override
     public void init() {
         /* Set the Nimbus look and feel */
@@ -61,10 +62,14 @@ public class CircleApplet extends javax.swing.JApplet {
                     @Override
                     // la fiecare update al timer-ului se redeseneaza cercurile pe canvas
                     public void actionPerformed(ActionEvent e) {
-                            canvas.repaint();
+                            // se curata canvasul 
+                            Graphics g = canvas.getGraphics();
+                            g.clearRect(0, 0, 474, 282);
+                            //canvas.repaint();
                             for(Circle c : circles){
-                                c.drawCircle(canvas);
+                                c.drawCircle(canvas);// se deseneaza fiecare cerc pe canvas
                             }
+                       
                         }
                     });
                     initComponents();
@@ -93,6 +98,7 @@ public class CircleApplet extends javax.swing.JApplet {
         blueStop = new javax.swing.JButton();
         yellowStop = new javax.swing.JButton();
         speedSlide = new javax.swing.JSlider();
+        greenButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -154,6 +160,13 @@ public class CircleApplet extends javax.swing.JApplet {
             }
         });
 
+        greenButton.setText("green");
+        greenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                greenButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,7 +176,10 @@ public class CircleApplet extends javax.swing.JApplet {
                 .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(greenButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(redButton)
@@ -174,7 +190,7 @@ public class CircleApplet extends javax.swing.JApplet {
                             .addComponent(redStop)
                             .addComponent(blueStop)
                             .addComponent(yellowStop))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,15 +210,20 @@ public class CircleApplet extends javax.swing.JApplet {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(yellowButton)
                             .addComponent(yellowStop))
-                        .addGap(27, 27, 27)
-                        .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(greenButton)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
   
     private void ButtonClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ButtonClick
         // TODO add your handling code here:
-        tm.stop();
+        tm.stop();//inainte de a adauga un cerc se opreste timerul 
         if(evt.getComponent().equals(redButton))
             circles.add(new Circle(Color.RED, canvas.getSize()));
         if(evt.getComponent().equals(blueButton))
@@ -221,6 +242,7 @@ public class CircleApplet extends javax.swing.JApplet {
 
     private void StopMotion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_StopMotion
         // TODO add your handling code here:
+        tm.stop();
         Color c = Color.PINK;
         if(evt.getComponent().equals(redStop))
             c = Color.RED;
@@ -231,13 +253,22 @@ public class CircleApplet extends javax.swing.JApplet {
         for(Circle cir : circles)
             if(cir.ColorMatch(c))
                 cir.Stop();
+        tm.start();
     }//GEN-LAST:event_StopMotion
+
+    private void greenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_greenButtonActionPerformed
+        // TODO add your handling code here:
+                tm.stop();//inainte de a adauga un cerc se opreste timerul 
+            circles.add(new Circle(Color.GREEN, canvas.getSize()));
+        tm.start();
+    }//GEN-LAST:event_greenButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton blueButton;
     private javax.swing.JButton blueStop;
     private java.awt.Canvas canvas;
+    private javax.swing.JButton greenButton;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JButton redButton;
     private javax.swing.JButton redStop;
