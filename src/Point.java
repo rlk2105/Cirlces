@@ -6,7 +6,7 @@
 
 /**
  *
- * @author Vlad
+ * @author Raluca
  */
 public class Point {
     private int X, Y;

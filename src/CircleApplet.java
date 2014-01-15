@@ -17,7 +17,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Vlad
+ * @author Raluca
  */
 public class CircleApplet extends javax.swing.JApplet {
     /**
@@ -181,6 +181,7 @@ public class CircleApplet extends javax.swing.JApplet {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(redButton)
@@ -194,8 +195,7 @@ public class CircleApplet extends javax.swing.JApplet {
                             .addComponent(yellowButton)
                             .addComponent(yellowStop))
                         .addGap(27, 27, 27)
-                        .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(speedSlide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

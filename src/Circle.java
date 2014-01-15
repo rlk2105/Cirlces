@@ -1,8 +1,10 @@
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,10 +12,28 @@ import java.awt.Graphics;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Vlad
- */
+class DoubleBufferedCanvas extends Canvas {
+    
+    public void update(Graphics g) {
+	Graphics offgc;
+	Image offscreen = null;
+	Dimension d = size();
+
+	// create the offscreen buffer and associated Graphics
+	offscreen = createImage(d.width, d.height);
+	offgc = offscreen.getGraphics();
+	// clear the exposed area
+	offgc.setColor(getBackground());
+	offgc.fillRect(0, 0, d.width, d.height);
+	offgc.setColor(getForeground());
+	// do normal redraw
+	paint(offgc);
+	// transfer offscreen to window
+	g.drawImage(offscreen, 0, 0, this);
+    }
+}
+
+
 public class Circle {
     // culoarea cercului
     private Color _color;
